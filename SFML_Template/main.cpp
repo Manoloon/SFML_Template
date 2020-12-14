@@ -1,20 +1,12 @@
 #include "Game.h"
 
-int main(int argc,char** argv[])
+void main(int argc,void** argv[])
 {
-	while (Window.isOpen())
+	Game game;
+	while (!game.GetWindow()->IsDone())
 	{
-		sf::Event event;
-		while (Window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-				Window.close();
-		}
-
-		Window.clear();
-		Window.draw(shape);
-		Window.display();
+		game.Update();
+		game.Render();
+		game.RestartClock();
 	}
-
-	return 0;
 }
