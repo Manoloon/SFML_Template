@@ -2,8 +2,11 @@
 #include <vector>
 #include <iostream>
 #include <unordered_map>
-#include <functional>
-#include "BaseState.h"
+#include "SharedContext.h"
+#include "State_Intro.h"
+#include "State_MainMenu.h"
+
+enum class StateType { Intro = 1, MainMenu, Game, Paused, GameOver, Credits };
 
 using StateContainer = std::vector<std::pair<StateType, BaseState*>>;
 using TypeContainer = std::vector<StateType>;
@@ -21,6 +24,7 @@ public:
 	void ProcessRequest();
 
 	SharedContext* GetContext();
+
 	bool HasState(const StateType& l_type);
 
 	void SwitchTo(const StateType& l_type);

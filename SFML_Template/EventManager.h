@@ -90,13 +90,13 @@ public:
 
 	// Template -> necesita ser declarado en el header.
 	template<class T>
-	bool AddCallback(const std::string& l_name,void(T::*l_func) (EventDetails*),T* l_instance)
+	bool AddCallback(StateType l_state, std::string& l_name,void(T::*l_func) (EventDetails*),T* l_instance)
 	{
 		auto itr = m_callbacks.emplace(l_state, CallbackContainer()).first;
 		auto temp = std::bind(l_func, l_instance, std::placeholders::_1);
-		return m_callbacks.emplace(l_name, temp).second;
+		return itr->second.emplace(l_name, temp).second;
 	}
-	void RemoveCallback(StateType l_state, const std::string& l_name)
+	bool RemoveCallback(StateType l_state, const std::string& l_name)
 	{
 		auto itr = m_callbacks.find(l_state);
 		if (itr == m_callbacks.end()) { return false; }
